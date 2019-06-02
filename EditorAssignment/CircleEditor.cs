@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Circle))]
 public class CircleEditor : EditorWindow
 {
     public GameObject gameObject;
