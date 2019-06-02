@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class CircleEditor : EditorWindow
 {
@@ -22,10 +21,25 @@ public class CircleEditor : EditorWindow
     {
         GUILayout.Label("Circle settings", EditorStyles.boldLabel);
         
-        Assert.IsNotNull(gameObject, "You need to assign a gameobject in the Circle Editor.");
         gameObject = (GameObject)EditorGUILayout.ObjectField(gameObject, typeof(GameObject), true);
 
-        // If gameobject's does not have a LineRenderer component, add it.
+        // If we are changing the values for radius and segments.
+        EditorGUI.BeginChangeCheck();
+
+        segments = EditorGUILayout.IntSlider("Segments", segments, 10, 50);
+        radius = EditorGUILayout.Slider("Radius", radius, 1f, 10f);
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            CreateCircle();
+        }
+
+        if (!gameObject)
+        {
+            return;
+        }
+
+        // If gameobject does not have a LineRenderer component, add it.
         if (!gameObject.GetComponent<LineRenderer>())
         {
             gameObject.AddComponent<LineRenderer>();
@@ -34,7 +48,7 @@ public class CircleEditor : EditorWindow
         }
         else
         {
-            // If LineRenderer's loop is false, set to true.
+            // If it already has a LineRenderer component, set loop to true.
             if (!gameObject.GetComponent<LineRenderer>().loop)
             {
                 lineRenderer.loop = true;
@@ -47,17 +61,6 @@ public class CircleEditor : EditorWindow
         {
             lineRenderer = gameObject.GetComponent<LineRenderer>();
             lineRenderer.loop = true;
-        }
-
-        // If we are changing the values for radius and segments.
-        EditorGUI.BeginChangeCheck();
-
-        segments = EditorGUILayout.IntSlider("Segments", segments, 10, 50);
-        radius = EditorGUILayout.Slider("Radius", radius, 1f, 10f);
-
-        if (EditorGUI.EndChangeCheck())
-        {
-            CreateCircle();
         }
     }
 
