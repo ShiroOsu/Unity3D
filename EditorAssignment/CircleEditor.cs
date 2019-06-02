@@ -8,7 +8,7 @@ public class CircleEditor : EditorWindow
 
     private int segments;
     private const int zero = 0;
-    private float lineWidth;
+    private float lineWidth = 0.1f;
     private float radius;
 
     [MenuItem("Window/CircleEditor")]
