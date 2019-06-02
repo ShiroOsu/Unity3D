@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CircleEditor : EditorWindow
 {
@@ -20,6 +21,8 @@ public class CircleEditor : EditorWindow
     public void OnGUI()
     {
         GUILayout.Label("Circle settings", EditorStyles.boldLabel);
+        
+        Assert.IsNotNull(gameObject, "You need to assign a gameobject in the Circle Editor.");
         gameObject = (GameObject)EditorGUILayout.ObjectField(gameObject, typeof(GameObject), true);
 
         // If gameobject does not have a LineRenderer component, add it.
