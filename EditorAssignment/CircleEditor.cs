@@ -7,7 +7,7 @@ public class CircleEditor : EditorWindow
     private LineRenderer lineRenderer;
 
     private int segments;
-    private const int zero;
+    private const int zero = 0;
     private float lineWidth;
     private float radius;
 
