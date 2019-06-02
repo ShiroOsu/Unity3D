@@ -21,7 +21,8 @@ public class CircleEditor : EditorWindow
     {
         GUILayout.Label("Circle settings", EditorStyles.boldLabel);
         gameObject = (GameObject)EditorGUILayout.ObjectField(gameObject, typeof(GameObject), true);
-        
+
+        // If gameobject does not have a LineRenderer component, add it.
         if (!gameObject.GetComponent<LineRenderer>())
         {
             gameObject.AddComponent<LineRenderer>();
@@ -30,15 +31,25 @@ public class CircleEditor : EditorWindow
         }
         else
         {
+            // If it already has a LineRenderer component, set loop to true.
             if (!gameObject.GetComponent<LineRenderer>().loop)
             {
                 lineRenderer.loop = true;
             }
         }
-        
+
+        // If we close Circle Editor and open a new one it does not
+        // get the LineRenderer component already on the gameobject.
+        if (!lineRenderer)
+        {
+            lineRenderer = gameObject.GetComponent<LineRenderer>();
+            lineRenderer.loop = true;
+        }
+
+        // If we are changing the values for radius and segments.
         EditorGUI.BeginChangeCheck();
 
-        segments = EditorGUILayout.IntSlider("Sides", segments, 10, 50);
+        segments = EditorGUILayout.IntSlider("Segments", segments, 10, 50);
         radius = EditorGUILayout.Slider("Radius", radius, 1f, 10f);
 
         if (EditorGUI.EndChangeCheck())
@@ -47,6 +58,7 @@ public class CircleEditor : EditorWindow
         }
     }
 
+    // Create Circle.
     private void CreateCircle()
     {
         float deltaTheta = (2f * Mathf.PI) / segments;
