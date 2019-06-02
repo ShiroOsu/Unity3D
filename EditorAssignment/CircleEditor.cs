@@ -25,7 +25,7 @@ public class CircleEditor : EditorWindow
         Assert.IsNotNull(gameObject, "You need to assign a gameobject in the Circle Editor.");
         gameObject = (GameObject)EditorGUILayout.ObjectField(gameObject, typeof(GameObject), true);
 
-        // If gameobject does not have a LineRenderer component, add it.
+        // If gameobject's does not have a LineRenderer component, add it.
         if (!gameObject.GetComponent<LineRenderer>())
         {
             gameObject.AddComponent<LineRenderer>();
@@ -34,7 +34,7 @@ public class CircleEditor : EditorWindow
         }
         else
         {
-            // If it already has a LineRenderer component, set loop to true.
+            // If LineRenderer's loop is false, set to true.
             if (!gameObject.GetComponent<LineRenderer>().loop)
             {
                 lineRenderer.loop = true;
